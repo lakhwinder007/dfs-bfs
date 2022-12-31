@@ -1,0 +1,57 @@
+bool are_all_vis(vector<vector<int>>grid,vector<vector<int>>vis){
+    int n=grid.size();
+    int m=grid[0].size();
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(grid[i][j]!=-1&&vis[i][j]==0&&grid[i][j]!=2)return false;
+        }
+    }
+    return true;
+}
+    int dfs(int i,int j,int ex,int ey,vector<vector<int>>&grid,vector<vector<int>>&vis){
+        int n=grid.size();
+        int m=grid[0].size();
+        if(i>=n||j>=m||i<0||j<0)return 0;
+        if(vis[i][j]==1)return 0;
+        
+        if(grid[i][j]==-1)return 0;
+         
+        if(grid[i][j]==2){
+            if(are_all_vis(grid,vis))return 1;
+            else return 0;
+        }
+         vis[i][j]=1;
+        int a=0,b=0,c=0,d=0;
+        // if(vis[i+1][j]==0)a=dfs(i+1,j,ex,ey,grid,vis);
+        // if(vis[i][j+1]==0)b=dfs(i,j+1,ex,ey,grid,vis);
+        // if(vis[i][j-1]==0)c=dfs(i,j-1,ex,ey,grid,vis);
+        // if(vis[i-1][j]==0)d=dfs(i-1,j,ex,ey,grid,vis);
+                a=dfs(i+1,j,ex,ey,grid,vis);
+                b=dfs(i,j+1,ex,ey,grid,vis);
+                c=dfs(i,j-1,ex,ey,grid,vis);
+                d=dfs(i-1,j,ex,ey,grid,vis);
+                vis[i][j]=0;
+                return a+b+c+d;
+
+    }
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+
+        vector<vector<int>>vis(n,vector<int>(m,0));
+              int sx,sy,ex,ey;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    sx=i;
+                    sy=j;
+                }
+                else if(grid[i][j]==2){
+                    ex=i;
+                    ey=j;
+                }
+            }
+        }
+       return  dfs(sx,sy,ex,ey,grid,vis);
+
+    }
